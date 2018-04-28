@@ -28,6 +28,7 @@ Route::prefix('manage')->middleware('role:superadministrator|administrator|edito
   Route::resource('/posts', 'PostController');
   Route::get('/pages/{pages}/confirm', ['as' => 'manage.pages.confirm', 'uses' => 'PagesController@confirm']);
   Route::resource('/pages', 'PagesController', ['except' => ['show']]);
+  
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
