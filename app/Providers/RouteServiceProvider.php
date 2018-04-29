@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Page;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -34,11 +35,12 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function map()
+    public function map(Router $router)
     {
+        
         $this->mapApiRoutes();
 
-        $this->mapWebRoutes();
+        $this->mapWebRoutes($router);
 
         //
        
@@ -51,11 +53,28 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapWebRoutes()
+    protected function mapWebRoutes(Router $router)
     {
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
+             
+             $router->group(['namespace' => $this->namespace], function ($router) {
+                require app_path('Http/routes.php');
+            });
+    
+            if (! app()->runningInConsole()) {
+                foreach (Page::all() as $page) {
+                    $router->get($page->uri, ['as' => $page->name, function () use ($page, $router) {
+                        return $this->app->call('App\Http\Controllers\PageController@show', [
+                            'page' => $page,
+                            'parameters' => $router->current()->parameters()
+                        ]);
+                    }]);
+                }
+            }
+        
+            
     }
 
     /**

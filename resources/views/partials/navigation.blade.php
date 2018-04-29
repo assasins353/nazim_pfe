@@ -1,16 +1,22 @@
-@foreach($pages as $page)
-    <li class="{{ Request::is($page->uri_wildcard) ? 'active' : '' }} {{ count($page->children) ? ($page->isChild() ? 'dropdown-submenu' : 'dropdown') : '' }}">
-        <a href="{{ url($page->uri) }}">
-            {{ $page->title }}
+<?php 
+use App\Page;
 
-            @if(count($page->children))
-                <span class="caret {{ $page->isChild() ? 'right' : '' }}"></span>
+$pag = App\Page::all();
+?>
+@foreach($pag as $pages)
+
+    <li class="{{ Request::is($pages->uri_wildcard) ? 'active' : '' }} {{ count($pages->children) ? ($pages->isChild() ? 'dropdown-submenu' : 'dropdown') : '' }}">
+        <a href="{{ url($pages->uri) }}">
+            {{ $pages->title}}
+
+            @if(count($pages->children))
+                <span class="caret {{ $pages->isChild() ? 'right' : '' }}"></span>
             @endif
         </a>
 
-        @if(count($page->children))
+        @if(count($pages->children))
             <ul class="dropdown-menu">
-                @include('partials.navigation', ['pages' => $page->children])
+                @include('partials.bis', ['pag' => $pages->children])
             </ul>
         @endif
     </li>

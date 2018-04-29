@@ -1,9 +1,9 @@
 <?php
 
-namespace nazim\Templates;
+namespace App\Templates;
 
 use Carbon\Carbon;
-use SundaySim\Post;
+use App\Post;
 use Illuminate\View\View;
 
 class BlogPostTemplate extends AbstractTemplate
@@ -17,7 +17,7 @@ class BlogPostTemplate extends AbstractTemplate
         $this->posts = $posts;
     }
 
-    public function prepare(View $view, array $parameters)
+    public function prepare(View $view)
     {
         $post = $this->posts->where('id', $parameters['id'])->where('slug', $parameters['slug'])->first();
 

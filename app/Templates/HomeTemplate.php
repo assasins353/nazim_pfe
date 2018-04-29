@@ -1,9 +1,9 @@
 <?php
 
-namespace nazim\Templates;
+namespace App\Templates;
 
 use Carbon\Carbon;
-use SundaySim\Post;
+use App\Post;
 use Illuminate\View\View;
 
 class HomeTemplate extends AbstractTemplate
@@ -17,7 +17,7 @@ class HomeTemplate extends AbstractTemplate
         $this->posts = $posts;
     }
 
-    public function prepare(View $view, array $parameters)
+    public function prepare(View $view)
     {
         $posts = $this->posts->with('author')
                              ->where('published_at', '<', Carbon::now())
