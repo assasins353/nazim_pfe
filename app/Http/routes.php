@@ -24,7 +24,8 @@ Route::prefix('manage')->middleware('role:superadministrator|administrator|edito
   Route::resource('/users', 'UserController');
   Route::resource('/permissions', 'PermissionController', ['except' => 'destroy']);
   Route::resource('/roles', 'RoleController', ['except' => 'destroy']);
-  Route::resource('/posts', 'PostController');
+  Route::get('manage/posts/{posts}/confirm', ['as' => 'manage.posts.confirm', 'uses' => 'Backend\PostController@confirm']);
+  Route::resource('manage/posts', 'Backend\PostsController');
   Route::get('/pages/{pages}/confirm', ['as' => 'manage.pages.confirm', 'uses' => 'PagesController@confirm']);
   Route::resource('/pages', 'PagesController', ['except' => ['show']]);
  

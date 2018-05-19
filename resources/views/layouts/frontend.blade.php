@@ -20,10 +20,26 @@
                 </ul>
             </div>
         </nav>
+        <?php 
+use App\Page;
 
+$pag = App\Page::all();
+
+?>
+
+@foreach($pag as $p)
+
+@if($pages==$p->uri)
+
+@php $contenue=$p->content
+
+@endphp
+@endif
+
+@endforeach
         <div class="container">
             <div class="row">
-                <div class="col-md-12">@yield('content')</div>
+                <div class="col-md-12">  {{  $contenue }}  </div>
             </div>
         </div>
     </body>

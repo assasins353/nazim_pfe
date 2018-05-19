@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Http\Requests;
+use Baum\MoveNotPossibleException;
 
 class PostController extends Controller
 {
-  public function __construct()
+  protected $posts;
+
+  public function __construct(Post $posts)
   {
-    $this->middleware('role:superadministrator|administrator|editor|author|contributor');
+      $this->posts = $posts;
   }
 
   /**
@@ -19,7 +23,9 @@ class PostController extends Controller
    */
   public function index()
   {
-    return view('manage.posts.index');
+      $posts = $this->posts->with('author')->orderBy('published_at', 'desc')->paginate(10);
+
+      return view('manage.posts.index', compact('posts'));
   }
 
   /**
@@ -27,9 +33,9 @@ class PostController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function create()
+  public function create(Post $post)
   {
-      return view('manage.posts.create');
+      return view('manage.posts.form', compact('post'));
   }
 
   /**
@@ -38,9 +44,14 @@ class PostController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(Requests\StorePostRequest $request)
   {
+    
+      $this->posts->create(
+          ['author_id' => auth()->user()->id] + $request->only('title','key_word','cat', 'slug', 'published_at', 'body', 'excerpt')
+      );
 
+      return redirect(route('posts.index'))->with('status', 'L\'article a été crée.');
   }
 
   /**
@@ -51,7 +62,9 @@ class PostController extends Controller
    */
   public function show($id)
   {
-
+    $post = Post::where('id', $id)->first();
+    
+    return view("manage.posts.show")->withPost($post);
   }
 
   /**
@@ -61,8 +74,10 @@ class PostController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function edit($id)
-  {
-
+  { 
+      $post = $this->posts->findOrFail($id);
+     
+      return view('manage.posts.form', compact('post'));
   }
 
   /**
@@ -72,9 +87,21 @@ class PostController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(Requests\UpdatePostRequest $request, $id)
   {
+      
+      $post = $this->posts->findOrFail($id);
 
+      $post->fill($request->only('title', 'slug', 'published_at', 'body', 'excerpt','key_word'))->save();
+
+      return redirect(route('posts.index', $post->id))->with('status', 'L\'article a été modifié.');
+  }
+
+  public function confirm($id)
+  {
+      $post = $this->posts->findOrFail($id);
+
+      return view('manage.posts.confirm', compact('post'));
   }
 
   /**
@@ -85,11 +112,10 @@ class PostController extends Controller
    */
   public function destroy($id)
   {
-      //
-  }
+      $post = $this->posts->findOrFail($id);
 
-  public function apiCheckUnique(Request $request)
-  {
-    return json_encode(!Post::where('slug', '=', $request->slug)->exists());
+      $post->delete();
+
+      return redirect(route('posts.index'))->with('status', 'L\'article a été supprimé.');
   }
 }

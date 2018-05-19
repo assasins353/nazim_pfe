@@ -36,9 +36,9 @@
       <li>
         <a class="has-submenu">Multimedia</a>
         <ul class="submenu">
-          <li><a href="{{route('roles.index')}}">videos</a></li>
-          <li><a href="{{route('permissions.index')}}">sons</a></li>
-          <li><a href="{{route('permissions.index')}}">Images</a></li>
+          <li><a href="{{route('videos.index')}}">videos</a></li>
+          <li><a href="{{route('sons.index')}}">sons</a></li>
+          <li><a href="{{route('pictures.index')}}">Images</a></li>
         </ul>
       </li>
       <li>

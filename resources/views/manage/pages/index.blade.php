@@ -11,7 +11,7 @@
     <hr class="m-t-0">
 
  <div class="column">
-        <a href="{{route('pages.create')}}" class="button is-primary is-pulled-right"><i class="fa fa-user-plus m-r-10"></i> Create New Page</a>
+        <a href="{{route('pages.create')}}" class="button is-primary is-pulled-right"><i class="fa fa-user-plus m-r-10"></i> creer une page</a>
       </div>
     <table class="table table-hover">
         <thead>
@@ -20,6 +20,7 @@
                 <td>Adresse URL</td>
                 <td>Nom</td>
                 <td>Template</td>
+           
                 <td>Modifier</td>
                 <td>Supprimer</td>
             </tr>
@@ -38,6 +39,7 @@
                         <td><a href="{{ url($page->uri) }}">{{ $page->uri }}</a></td>
                         <td>{{ $page->name or 'Aucun' }}</td>
                         <td>{{ $page->template or 'Aucun' }}</td>
+                        
                         <td>
                             <a href="{{ route('pages.edit', $page->id) }}">
                             <i class="fa fa-fw fa-edit"></i>

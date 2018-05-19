@@ -35,12 +35,12 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function map(Router $router)
+    public function map()
     {
         
         $this->mapApiRoutes();
 
-        $this->mapWebRoutes($router);
+        $this->mapWebRoutes();
 
         //
        
@@ -53,28 +53,11 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapWebRoutes(Router $router)
+    protected function mapWebRoutes()
     {
         Route::middleware('web')
              ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
-             
-             $router->group(['namespace' => $this->namespace], function ($router) {
-                require app_path('Http/routes.php');
-            });
-    
-            if (! app()->runningInConsole()) {
-                foreach (Page::all() as $page) {
-                    $router->get($page->uri, ['as' => $page->name, function () use ($page, $router) {
-                        return $this->app->call('App\Http\Controllers\PageController@show', [
-                            'page' => $page,
-                            'parameters' => $router->current()->parameters()
-                        ]);
-                    }]);
-                }
-            }
-        
-            
+             ->group(base_path('routes/web.php'));       
     }
 
     /**

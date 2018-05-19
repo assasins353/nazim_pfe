@@ -13,7 +13,7 @@ class UpdatePageRequest extends FormRequest
      */
     public function authorize()
     {
-        
+       
         return true;
     }
 
@@ -23,11 +23,11 @@ class UpdatePageRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    { 
         return [
             'title' => ['required'],
             'uri' => ['required'],
-            'name' => ['unique:pages'],
+            'name' => ['required'],
             'content' => ['required']
         ];
     }

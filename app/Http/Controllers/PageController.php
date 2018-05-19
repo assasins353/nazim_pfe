@@ -8,14 +8,14 @@ use App\Page;
 
 class PageController extends Controller
 {
-    public function show(Page $page, array $parameters)
+    public function show(Page $page)
     {
-        $this->prepareTemplate($page,$parameters);
+        $this->prepareTemplate($page);
 
         return view('page', compact('page'));
     }
 
-    protected function prepareTemplate(Page $page, array $parameters)
+    protected function prepareTemplate(Page $page)
     {    
         $templates = config('cms.templates');
 
@@ -35,7 +35,7 @@ class PageController extends Controller
         }
   
 
-        $template->prepare($view = view($view, $parameters));
+        $template->prepare($view = view($view));
     
         $page->view = $view;
     }

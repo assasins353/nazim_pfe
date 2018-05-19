@@ -21,32 +21,20 @@
     </div>
     <div class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item is-tab is-active">Learn</a>
-        <a class="navbar-item is-tab">Discuss</a>
-        <a class="navbar-item is-tab">Share</a>
+        <a class="navbar-item is-tab is-active">TP</a>
+
       </div> <!-- end of .navbar-start -->
 
 
       <div class="navbar-end nav-menu" style="overflow: visible">
         @guest
-          <a href="{{route('login')}}" class="navbar-item is-tab">Login</a>
-          <a href="{{route('register')}}" class="navbar-item is-tab">Join the Community</a>
+          <a href="{{route('login')}}" class="navbar-item is-tab">connecter</a>
+          <a href="{{route('register')}}" class="navbar-item is-tab">Enregistrer</a>
         @else
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">Hey {{Auth::user()->name}}</a>
             <div class="navbar-dropdown is-right" >
-              <a href="#" class="navbar-item">
-                <span class="icon">
-                  <i class="fa fa-fw fa-user-circle-o m-r-5"></i>
-                </span>Profile
-              </a>
-
-              <a href="#" class="navbar-item">
-                <span class="icon">
-                  <i class="fa fa-fw fa-bell m-r-5"></i>
-                </span>Notifications
-              </a>
-              <a href="{{route('manage.dashboard')}}" class="navbar-item">
+            <a href="{{route('manage.dashboard')}}" class="navbar-item">
                 <span class="icon">
                   <i class="fa fa-fw fa-cog m-r-5"></i>
                 </span>Manage

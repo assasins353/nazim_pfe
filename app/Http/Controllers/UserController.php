@@ -12,6 +12,12 @@ use Input;
 
 class UserController extends Controller
 {
+  protected $users;
+
+  public function __construct(User $users)
+  {
+      $this->users = $users;
+  }
     /**
      * Display a listing of the resource.
      *
@@ -147,7 +153,13 @@ class UserController extends Controller
       //   return redirect()->route('users.edit', $id);
       // }
     }
-
+    public function confirm($id)
+    {
+        $user = $this->users->findOrFail($id);
+  
+        return view('manage.users.confirm', compact('user'));
+    }
+  
     /**
      * Remove the specified resource from storage.
      *
@@ -157,5 +169,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        $user = $this->users->findOrFail($id);
+
+        $user->delete();
+  
+        return redirect(route('users.index'))->with('status', 'L\'utilisateur a été supprimé.');
     }
 }

@@ -51,7 +51,7 @@ class PagesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Requests\StorePageRequest $request)
-    { die('re');
+    { 
         $page = $this->pages->create($request->only('title', 'uri', 'name', 'content', 'template', 'hidden'));
 
         $this->updatePageOrder($page, $request);
@@ -85,21 +85,21 @@ class PagesController extends Controller
      */
     public function update(Requests\UpdatePageRequest $request, $id)
     {
-       
+      
         $page = $this->pages->findOrFail($id);
      
-        if ($response = $this->updatePageOrder($page, $request)) {
+       /* if ($response = $this->updatePageOrder($page, $request)) {
            
             return $response;
-        }
-        
+        }*/
+       
         $page->fill($request->only('title', 'uri', 'name', 'content', 'template', 'hidden'))->save();
         
-        return redirect(route('pages.edit', $page->id))->with('status', 'La page a été modifiée.');
+        return redirect(route('pages.index', $page->id))->with('status', 'La page a été modifiée.');
     }
 
     public function confirm($id)
-    { die('re12');
+    { 
         $page = $this->pages->findOrFail($id);
 
         return view('manage.pages.confirm', compact('page'));
@@ -112,7 +112,7 @@ class PagesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    { die('re');
+    { 
         $page = $this->pages->findOrFail($id);
 
         foreach ($page->children as $child) {
