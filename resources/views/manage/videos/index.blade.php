@@ -30,12 +30,7 @@
                 @foreach($videos as $video)
                     <tr >
                         <td>
-                        <?php  $db = mysqli_connect("localhost","root","","cms2"); //keep your db name
-$sql = "SELECT * FROM videos WHERE id = $video->id";
-$sth = $db->query($sql);
-$result=mysqli_fetch_array($sth);
-
-                             echo '<img src="data:image/jpeg;base64,'.base64_encode( $result['videos'] ).'"/>';  ?>
+                        <?php  echo $video->videos;  ?>
                         </td>
                         
                         

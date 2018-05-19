@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 
 
+
+
 Auth::routes();
 
 Route::prefix('manage')->middleware('role:superadministrator|administrator|editor|author|contributor')->group(function () {
@@ -39,6 +41,11 @@ Route::prefix('manage')->middleware('role:superadministrator|administrator|edito
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/{post}', function ($post) {
+  $pos=['post' => $post];
+  return view('dernier',$pos);
+});
 Route::get('/{pages}', function ($pages) {
   $pag=['pages' => $pages];
   return view('layouts.frontend',$pag);

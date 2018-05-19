@@ -30,15 +30,12 @@
                 @foreach($pictures as $picture)
                     <tr >
                         <td>
-                        <?php  $db = mysqli_connect("localhost","root","","cms2"); //keep your db name
-$sql = "SELECT * FROM pictures WHERE id = $picture->id";
-$sth = $db->query($sql);
-$result=mysqli_fetch_array($sth);
+                        <?php  
 
-echo $result['image'];
+echo $picture->image;
 
 
-                             echo '<img src="data:image/jpeg;base64,'.base64_encode( $result['image'] ).'"/>';  ?>
+                             echo '<img src="data:image/jpeg;base64,'.base64_encode( $picture->image ).'"/>';  ?>
                         </td>
                         
                         

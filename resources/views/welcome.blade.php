@@ -74,7 +74,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/manage') }}">Home</a>
                     @else
                         <a href="{{ url('/login') }}">Login</a>
                         <a href="{{ url('/register') }}">Register</a>
@@ -84,8 +84,42 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    DevMarketer.io
+                Liste des Posts
+               
                 </div>
+                <?php 
+use App\Post;
+
+$pag = App\Post::all();
+?>
+<table class="table table-hover">
+        <thead>
+            <tr>
+                <td>Titre</td>
+                <td>Contenue</td>
+              
+            </tr>
+        </thead>
+        <tbody>
+@foreach($pag as $post)
+
+     
+        <tr >
+                        <td>
+                            {!! $post->title !!}
+                        </td>
+                        <td>
+                            {!! $post->excerpt!!}
+                        </td>
+                        <td><a href="{{ url($post->id) }}">
+                voir contenue
+                </a></td>
+                <td>
+                    </tr>
+
+@endforeach
+</tbody>
+    </table>
             </div>
         </div>
 
